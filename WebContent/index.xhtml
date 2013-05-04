@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+   	<ui:composition template="plantilla.xhtml">
+	<ui:define name="usuario"/>
+    <ui:define name="menu"/>
+    <ui:define name="contenido">
+        <h:head>
+            <script type="text/javascript">
+                function handleLoginRequest(xhr, status, args) {
+                    if (args.validationFailed || !args.loggedIn) {
+                        dlg.jq.effect("shake", {times: 5}, 100);
+                    }
+                    else {
+                        dlg.hide();
+                        $('#loginLink').fadeOut();
+                    }
+                }
+            </script> 
+
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>SGI Evanter</title>
+                <h:outputStylesheet name="css/jsfcrud.css"/>               
+            </f:facet> 
+            <h:outputStylesheet name="body.css" library="css"  />
+        </h:head>
+
+        <h:body  class="body"  >
+
+            <h:form id="form">  
+                <h:outputLink style="   position: absolute;    top: 50px;    left:900px;"
+                              value="javascript:void(0)" onclick="dlg.show();" title="Clic para ingresar" >     
+                    <p:graphicImage  value="/resources/images/sgi.png"  />          
+                </h:outputLink> 
+                <h:outputLink style="   position: absolute;    top: 1px;    left:1200px;  "
+                              value="javascript:void(0)" onclick="dlg.show();" title="Clic para ingresar" >     
+                    <p:graphicImage  value="/resources/images/ico-login_1.jpg"  />          
+                </h:outputLink> 
+                <p:growl id="growl" showDetail="true" life="3000" />  
+
+                <p:dialog id="dialog" header="Login" widgetVar="dlg" resizable="false">  
+
+                    <h:panelGrid columns="2" cellpadding="5">  
+                        <h:outputLabel for="username" value="Username:" />  
+                        <p:inputText value="#{loginBean.username}"   
+                                     id="username" required="true" label="username" />  
+
+                        <h:outputLabel for="password" value="Password:" />  
+                        <h:inputSecret value="#{loginBean.password}"   
+                                       id="password" required="true" label="password" />  
+
+                        <f:facet name="footer">  
+                            <p:commandButton id="loginButton" value="Login" update="growl"   
+                                             actionListener="#{loginBean.login}"   
+                                             oncomplete="handleLoginRequest(xhr, status, args)"/>  
+                        </f:facet>  
+                    </h:panelGrid>  
+
+                </p:dialog>  
+
+                <h4 style="position: absolute;top:-27px ;left:170px;color: green">Universidad el Bosque</h4>
+            </h:form> 
+            <br />       
+        </h:body>
+        </ui:define>
+</ui:composition>
+</html>

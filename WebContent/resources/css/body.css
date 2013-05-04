@@ -1,0 +1,14 @@
+
+
+body {
+background: url(../resources/images/full2.jpg)   no-repeat center center fixed;
+ position: fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+
+}
+
+
+

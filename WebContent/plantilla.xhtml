@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title><ui:insert name="title">SGI-Evanter</ui:insert></title>
+
+</h:head>
+
+<h:body 	>
+	<h:outputStylesheet name="login.css" library="css"/>
+	
+	<div id="usuario" style="margin-bottom: 8px; margin-left: 4px">
+		<ui:insert name="usuario">
+			Bienvenido(a), <b>#{loginBean.usuario.nombre}</b>,
+            su ultimo acceso fue el 
+            <h:outputText value="#{loginBean.usuario.fechaUltimoAcceso}" style="font-weight: bold">
+                <f:convertDateTime timeZone="GMT-5" pattern="dd/MM/yyyy"/>
+            </h:outputText>                                                
+            a las 
+            <h:outputText value="#{loginBean.usuario.fechaUltimoAcceso}" style="font-weight: bold">
+                <f:convertDateTime timeZone="GMT-5" pattern="HH:mm:ss"/>
+            </h:outputText>
+            horas.
+		</ui:insert>
+	</div>
+
+	<div id="menu" style="margin-bottom: 8px;">
+		<ui:insert name="menu">
+    	<h:form id="formMenu">
+            <p:menubar autoDisplay="false">
+                <p:menuitem value="Principal" url="/" icon="icon-home" />
+                <p:menuitem value="Buscar" url="#" icon="icon-search" />  
+                <p:submenu label="Bibliotecas" icon="icon-mant">  
+                    <p:menuitem value="Generos" url="#" icon="icon-music" />  
+                    <p:menuitem value="Artistas" url="#" icon="icon-artist" />  
+                    <p:menuitem value="Albumes" url="#" icon="icon-album" />  
+                    <p:menuitem value="Temas" url="#" icon="icon-title" />  
+                </p:submenu>  
+                <p:submenu label="Reportes" icon="icon-report">  
+                    <p:menuitem value="Listas semanales" url="#" icon="icon-report" />  
+                    <p:menuitem value="Listas diarias" url="#" icon="icon-report" />  
+                </p:submenu>  
+                <p:submenu label="Seguridad" icon="icon-security">  
+                    <p:menuitem value="Roles" url="#" icon="icon-rol" />  
+                    <p:menuitem value="Usuarios" url="/seguridad/usuarios" icon="icon-user" />  
+                </p:submenu>
+                <p:menuitem style="position: absolute; right: 60px;" value="Configuraci&oacute;n" url="#" icon="icon-pref" />
+                <p:menuitem style="position: absolute; right: 4px;" value="Salir" action="#{loginBean.efectuarLogoff()}" icon="icon-exit" />  
+            </p:menubar>
+        </h:form>
+  		</ui:insert>
+	</div>
+
+	<div id="contenido" style="margin-left: 4px">
+		<ui:insert name="contenido">
+		</ui:insert>
+	</div>
+	
+	<p:dialog showHeader="false" modal="true" widgetVar="statusDialog" header="Status"   
+              draggable="false" closable="false"
+              position="center"
+              resizable="false">
+        <h:outputText value="Espere porfavor..."/><br/>
+        <p:graphicImage value="resources/img/Ajaxloading.gif"/>
+    </p:dialog>
+    
+</h:body>
+</html>
