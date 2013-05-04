@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Usuario">
+	<insert id="insertar" parameterType="Usuario" keyProperty="usu_usuario">
+		insert into
+		usuarios(usu_usuario,usu_nombre,usu_cargo,usu_dias,usu_fechac,usu_estado,usu_tipo,usu_contrasenia)
+		values(#{usuario},#{nombre},#{cargo},#{dias},#{fechacreacion},#{estado},#{tipo},AES_ENCRYPT('12345','031'))
+	</insert>
+	<update id="actualizar" parameterType="Usuario">
+		update usuarios set
+		usu_nombre=#{nombre},
+		usu_cargo=#{cargo},
+		usu_dias=#{dias},
+		usu_estado=#{estado},
+		usu_tipo=#{tipo},
+		usu_contrasenia=aes_encrypt(#{contrasenia},'031')
+		where
+		usu_usuario=#{usuario}
+	</update>
+	<delete id="eliminar" parameterType="String">
+		delete from usuarios where
+		usu_usuario=#{usuario}
+	</delete>
+
+	<select id="buscarPorUsuario" parameterType="Usuario"
+		resultType="Usuario">
+		select usu_nombre as 'nombre',
+		usu_cargo as
+		'cargo',
+		usu_contrasenia as 'contrasenia'
+		from usuarios where usu_usuario=#{usuario} and
+		usu_contrasenia=aes_encrypt(#{contrasenia},"031")
+	</select>
+	<select id="encuantraUsuario" parameterType="String" resultType="Usuario"
+		resultMap="resultado">
+		select usu_nombre,
+		usu_cargo,
+		usu_contrasenia
+		from usuarios where usu_usuario= #{usuario}
+	</select>
+	<resultMap type="Usuario" id="resultado">
+		<result column="usu_nombre" property="nombre" />
+		<result column="usu_cargo" property="cargo" />
+		<result column="usu_contrasenia" property="contrasenia" />
+		<result column="usu_usuario" property="usuario" />
+
+	</resultMap>
+
+</mapper>
